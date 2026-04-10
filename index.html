@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/MY LOGO new new-01.png">
+<title>DentPrice | Abdurahman Badawy </title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+body{font-family:'Segoe UI';background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;margin:0}
+header{text-align:center;padding:30px}
+h1{margin:0;font-size:38px}
+.dev{font-size:13px;opacity:.7}
+section{background:#1e293b;margin:20px;padding:20px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.4)}
+button{padding:8px 12px;border:none;border-radius:8px;background:#22c55e;color:#fff;cursor:pointer}
+button.delete{background:#ef4444}
+input{padding:6px;margin:5px;border-radius:6px;border:none}
+.card{margin:10px 0;padding:10px;background:#334155;border-radius:10px}
+.total{margin-top:10px;font-weight:bold;color:#22c55e;white-space:pre-line}
+</style>
+</head>
+<body>
+<header>
+<h1>Pricing System for Dental Clinic</h1>
+<div class="dev">د. عبدالرحمن بدوي</div>
+</header>
+
+<section>
+<h2>الأصول (Assets)</h2>
+<div id="assets"></div>
+<button onclick="addAsset()">إضافة أصل</button><br><br>
+أيام العمل شهرياً: <input id="assetDays" type="number">
+ساعات العمل يومياً: <input id="assetHours" type="number">
+<div class="total" id="assetResult"></div>
+</section>
+
+<section>
+<h2>التكاليف الشهرية ( Monthly Expenses )</h2>
+<div id="expenses"></div>
+<button onclick="addExpense()">إضافة تكلفة</button><br><br>
+أيام العمل شهرياً: <input id="expDays" type="number">
+ساعات العمل يومياً: <input id="expHours" type="number">
+<div class="total" id="expenseResult"></div>
+</section>
+
+
+
+
+
+
+
+<section>
+<h2>الخدمات ( Services )</h2>
+<div id="services"></div>
+<button onclick="addService()">إضافة خدمة</button>
+<div class="total" id="serviceResult"></div>
+<button onclick="generatePDF()">📄 تحميل تقرير PDF</button>
+</section>
+
+<script>
+function addAsset(){
+let div=document.createElement('div');
+div.className='card';
+div.innerHTML=`اسم الأصل <input>
+السعر <input type='number' class='price'>
+عمر الأصل (سنوات) <input type='number' class='life'>
+عائد سنوي % <input type='number' class='roi'>
+<button class='delete' onclick='this.parentElement.remove();calcAssets()'>حذف</button>`;
+document.getElementById('assets').appendChild(div)}
+
+function calcAssets(){
+let prices=document.querySelectorAll('.price');
+let lifes=document.querySelectorAll('.life');
+let rois=document.querySelectorAll('.roi');
+let yearlyTotal=0;
+prices.forEach((p,i)=>{
+let price=parseFloat(p.value)||0;
+let life=parseFloat(lifes[i].value)||1;
+let roi=parseFloat(rois[i].value)||0;
+let depreciation=price/life;
+let yearly=depreciation+(depreciation*roi/100);
+yearlyTotal+=yearly});
+let days=document.getElementById('assetDays').value||1;
+let hours=document.getElementById('assetHours').value||1;
+let monthly=yearlyTotal/12;
+let daily=monthly/days;
+let hourly=daily/hours;
+document.getElementById('assetResult').innerText=
+`سنوياً: ${yearlyTotal.toFixed(2)}\nشهرياً: ${monthly.toFixed(2)}\nيومياً: ${daily.toFixed(2)}\nتكلفة الساعة: ${hourly.toFixed(2)}`;
+return hourly}
+
+function addExpense(){
+let div=document.createElement('div');
+div.className='card';
+div.innerHTML=`اسم التكلفة <input>
+السعر <input type='number' class='exp'>
+<button class='delete' onclick='this.parentElement.remove();calcExpenses()'>حذف</button>`;
+document.getElementById('expenses').appendChild(div)}
+
+function calcExpenses(){
+let exps=document.querySelectorAll('.exp');
+let total=0;
+exps.forEach(e=>total+=parseFloat(e.value)||0);
+let days=document.getElementById('expDays').value||1;
+let hours=document.getElementById('expHours').value||1;
+let hourly=total/(days*hours);
+document.getElementById('expenseResult').innerText=
+`إجمالي: ${total.toFixed(2)}\nتكلفة الساعة: ${hourly.toFixed(2)}`;
+return hourly}
+
+function addService(){
+let div=document.createElement('div');
+div.className='card';
+div.innerHTML=`اسم الخدمة <input class='name'>
+تكلفة المواد <input type='number' class='mat'>
+عدد الساعات <input type='number' class='time'>
+نسبة الربح % <input type='number' class='profit'>
+<button class='delete' onclick='this.parentElement.remove();calcServices()'>حذف</button>`;
+document.getElementById('services').appendChild(div)}
+
+function calcServices(){
+let names=document.querySelectorAll('.name');
+let mats=document.querySelectorAll('.mat');
+let times=document.querySelectorAll('.time');
+let profits=document.querySelectorAll('.profit');
+let assetH=calcAssets();
+let expH=calcExpenses();
+let totalText='';
+window.reportData=[];
+mats.forEach((m,i)=>{
+let mat=parseFloat(m.value)||0;
+let t=parseFloat(times[i].value)||0;
+let p=parseFloat(profits[i].value)||0;
+let base=mat+(t*(assetH+expH));
+let final=base+(base*p/100);
+let name=names[i].value||`خدمة ${i+1}`;
+window.reportData.push({name,base,final});
+totalText+=`${name}\nالتكلفة: ${base.toFixed(2)}\nالسعر النهائي: ${final.toFixed(2)}\n--------------\n`});
+document.getElementById('serviceResult').innerText=totalText}
+
+function generatePDF(){
+const { jsPDF } = window.jspdf;
+let doc=new jsPDF();
+let y=10;
+doc.text("Dental Pricing Report",10,y);
+y+=10;
+(window.reportData||[]).forEach(s=>{
+doc.text(`${s.name}`,10,y);y+=6;
+doc.text(`Cost: ${s.base.toFixed(2)}`,10,y);y+=6;
+doc.text(`Final: ${s.final.toFixed(2)}`,10,y);y+=10});
+doc.save("report.pdf")}
+
+setInterval(()=>{calcAssets();calcExpenses();calcServices()},1000);
+</script>
+<footer>
+  <div class="footer-section">
+    <h3>About Me</h3>
+    <p>
+      , Egyptian Dentist د. عبدالرحمن بدوي</p>
+  </div>
+  
+  <div class="footer-section">
+    <h3> Contact Me </h3>
+    <p> <a href="mailto:abdurahman7002@gmail.com">Email</a> Abdurahman7002@gmail.com</p>
+    <p> <a href="tel:+201097183135">Phone </a>201097183135   </p>
+  </div>
+  
+  
+  
+  <div class="footer-section">
+    <h3>حقوق النشر</h3>
+    <p>© 2026 جميع الحقوق محفوظة.</p>
+    <img src="assets/photo_2026-04-10_08-09-42.jpg" alt="Logo" class="logo">
+    <img src="assets/photo_2026-04-10_08-43-52.jpg" alt="" class="logo">
+    <img src="assets/photo_2026-04-10_08-34-30.jpg" alt="" class="logo">
+  </div>
+</footer>
+
+<style>
+footer {
+  background: #1e293b;
+  padding: 30px;
+  color: #fff;
+  text-align: center;
+}
+.footer-section {
+  margin-bottom: 20px;
+}
+.footer-section h3 {
+  margin-bottom: 10px;
+}
+.logo {
+  max-width: 150px;
+  display: block;
+  margin: 10px auto;
+}
+</style>
+</body>
+</html>
