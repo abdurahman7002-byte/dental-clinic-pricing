@@ -330,6 +330,7 @@ body {
 <button onclick="addAsset()">إضافة أصل</button>
 <br>
 أيام العمل في الشهر: <input id="assetDays" type="number">
+  <br>
  ساعات العمل في اليوم: <input id="assetHours" type="number">
 
 <div class="total" id="assetResult"></div>
@@ -341,6 +342,7 @@ body {
 <button onclick="addExpense()">إضافة تكلفة</button>
 <br>
   أيام العمل شهريا: <input id="expDays" type="number">
+  <br>
 ساعات العمل يوميا: <input id="expHours" type="number">
 
 <div class="total" id="expenseResult"></div>
@@ -588,8 +590,11 @@ return hourly;
 function addExpense(){
 let div=document.createElement('div');
 div.className='card';
-div.innerHTML=`اسم <input>
-قيمة <input type='number' class='exp'>
+<br>
+div.innerHTML=`اسم التكلفة<input>
+<br>
+قيمة التكلفة <input type='number' class='exp'>
+<br>
 <button class='delete' onclick='this.parentElement.remove();calcExpenses()'>حذف</button>`;
 document.getElementById('expenses').appendChild(div)
 }
@@ -614,10 +619,15 @@ return hourly;
 function addService(){
 let div=document.createElement('div');
 div.className='card';
+  <br>
 div.innerHTML=`اسم الخدمة <input class='name'>
+<br>
 سعر المواد المستخدمة <input type='number' class='mat'>
+<br>
 الساعات <input type='number' class='time'>
+<br>
 ربح % <input type='number' class='profit'>
+<br>
 <button class='delete' onclick='this.parentElement.remove();calcServices()'>حذف</button>`;
 document.getElementById('services').appendChild(div)
 }
