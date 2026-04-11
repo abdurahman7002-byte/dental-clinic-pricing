@@ -37,8 +37,8 @@ footer{background:#1e293b;padding:30px;text-align:center}
 <div id="assets"></div>
 <button onclick="addAsset()">إضافة أصل</button>
 
-أيام العمل: <input id="assetDays" type="number">
-ساعات العمل: <input id="assetHours" type="number">
+أيام العمل في الشهر: <input id="assetDays" type="number">
+ ساعات العمل في اليوم: <input id="assetHours" type="number">
 
 <div class="total" id="assetResult"></div>
 </section>
@@ -48,8 +48,8 @@ footer{background:#1e293b;padding:30px;text-align:center}
 <div id="expenses"></div>
 <button onclick="addExpense()">إضافة تكلفة</button>
 
-أيام العمل: <input id="expDays" type="number">
-ساعات العمل: <input id="expHours" type="number">
+  أيام العمل شهريا: <input id="expDays" type="number">
+ساعات العمل يوميا: <input id="expHours" type="number">
 
 <div class="total" id="expenseResult"></div>
 </section>
@@ -121,8 +121,8 @@ let div=document.createElement('div');
 div.className='card';
 div.innerHTML=`اسم الأصل <input>
 السعر <input type='number' class='price'>
-العمر <input type='number' class='life'>
-% العائد <input type='number' class='roi'>
+عمر الاصل (سنوات)<input type='number' class='life'>
+%  العائد السنوي <input type='number' class='roi'>
 <button class='delete' onclick='this.parentElement.remove();calcAssets()'>حذف</button>`;
 document.getElementById('assets').appendChild(div)
 }
