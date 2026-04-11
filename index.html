@@ -222,7 +222,18 @@ margin-top: 10px;
   color: #0f172a;
   transform: translateY(-2px);
 }
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap; /* يسمح باللف لكن بشكل منظم */
+    justify-content: center;
+  }
 
+  .navbar a {
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
 
 body {
   margin: 0;
