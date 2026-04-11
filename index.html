@@ -220,24 +220,53 @@ footer {
 }
 
   
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+ <p id="visitorCount">عدد الزوار: ...</p>
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCchSXrbSdklZQ7M6qaCOdExGY1mcMNC3E",
-    authDomain: "dental-pricing.firebaseapp.com",
-    projectId: "dental-pricing",
-    storageBucket: "dental-pricing.firebasestorage.app",
-    messagingSenderId: "37962180711",
-    appId: "1:37962180711:web:a5812e4a344f6981430cc2"
-  };
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCchSXrbSdklZQ7M6qaCOdExGY1mcMNC3E",
+  authDomain: "dental-pricing.firebaseapp.com",
+  projectId: "dental-pricing",
+  storageBucket: "dental-pricing.firebasestorage.app",
+  messagingSenderId: "37962180711",
+  appId: "1:37962180711:web:a5812e4a344f6981430cc2"
+};
+
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+async function countVisitor() {
+  try {
+    const ref = db.collection("stats").doc("visits");
+
+    const doc = await ref.get();
+
+    if (!doc.exists) {
+      await ref.set({ count: 1 });
+    } else {
+      await ref.update({
+        count: doc.data().count + 1
+      });
+    }
+
+    const newDoc = await ref.get();
+
+    document.getElementById("visitorCount").innerText =
+      "عدد الزوار: " + newDoc.data().count;
+
+  } catch (e) {
+    console.log("ERROR:", e);
+    document.getElementById("visitorCount").innerText =
+      "خطأ في Firebase";
+  }
+}
+
+countVisitor();
 </script>
   
 </body>
