@@ -19,29 +19,7 @@ input{padding:6px;margin:5px;border-radius:6px;border:none}
 .total{margin-top:10px;font-weight:bold;color:#22c55e;white-space:pre-line}
 </style>
 
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDFm39toWRKuPVQ2YrheeI1-E4OWrXIzI0",
-    authDomain: "pricing-system-8f72e.firebaseapp.com",
-    projectId: "pricing-system-8f72e",
-    storageBucket: "pricing-system-8f72e.firebasestorage.app",
-    messagingSenderId: "1033479687146",
-    appId: "1:1033479687146:web:9e929e1bbd293cdb1fc093",
-    measurementId: "G-7GRJLGPNPH"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+  
 </head>
 <body>
   <p id="visitorCount">عدد الزوار: ...</p>
@@ -238,72 +216,6 @@ footer {
   display: block;
   margin: 10px auto;
 }
-</style>
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
-    }
-  }
-}
 
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDFm39toWRKuPVQ2YrheeI1-E4OWrXIzI0",
-    authDomain: "pricing-system-8f72e.firebaseapp.com",
-    projectId: "pricing-system-8f72e",
-    storageBucket: "pricing-system-8f72e.firebasestorage.app",
-    messagingSenderId: "1033479687146",
-    appId: "1:1033479687146:web:9e929e1bbd293cdb1fc093",
-    measurementId: "G-7GRJLGPNPH"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT_ID"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-async function countVisitor() {
-  const ref = db.collection("stats").doc("visits");
-
-  const doc = await ref.get();
-
-  if (!doc.exists) {
-    await ref.set({ count: 1 });
-  } else {
-    await ref.update({
-      count: doc.data().count + 1
-    });
-  }
-
-  const newDoc = await ref.get();
-
-  document.getElementById("visitorCount").innerText =
-    "عدد الزوار: " + newDoc.data().count;
-}
-
-countVisitor();
-</script>
 </body>
 </html>
