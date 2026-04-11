@@ -584,8 +584,8 @@ return hourly;
 function addExpense(){
 let div=document.createElement('div');
 div.className='card';
-div.innerHTML=`اسم <input>
-قيمة <input type='number' class='exp'>
+div.innerHTML=`اسم التكلفة <input>
+قيمة التكلفة<input type='number' class='exp'>
 <button class='delete' onclick='this.parentElement.remove();calcExpenses()'>حذف</button>`;
 document.getElementById('expenses').appendChild(div)
 }
