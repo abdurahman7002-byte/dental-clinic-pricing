@@ -550,7 +550,6 @@ div.innerHTML=`اسم الأصل <input>
 عمر الاصل (سنوات)<input type='number' class='life'>
 <br>
 %  العائد السنوي <input type='number' class='roi'>
-<br>
 <button class='delete' onclick='this.parentElement.remove();calcAssets()'>حذف</button>`;
 document.getElementById('assets').appendChild(div)
 }
@@ -594,7 +593,6 @@ div.className='card';
 div.innerHTML=`اسم التكلفة<input>
 <br>
 قيمة التكلفة <input type='number' class='exp'>
-<br>
 <button class='delete' onclick='this.parentElement.remove();calcExpenses()'>حذف</button>`;
 document.getElementById('expenses').appendChild(div)
 }
@@ -627,7 +625,6 @@ div.innerHTML=`اسم الخدمة <input class='name'>
 الساعات <input type='number' class='time'>
 <br>
 ربح % <input type='number' class='profit'>
-<br>
 <button class='delete' onclick='this.parentElement.remove();calcServices()'>حذف</button>`;
 document.getElementById('services').appendChild(div)
 }
