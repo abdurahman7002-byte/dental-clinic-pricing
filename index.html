@@ -78,21 +78,73 @@ footer{background:#1e293b;padding:30px;text-align:center}
 }
 
 
-
 /* ❌ لا نلمس body ولا img ولا div إطلاقًا */
+
+
+
+/* 🚫 لا نلمس أي عنصر عام مثل body, div, ul, a */
+
+.navbar-container {
+  text-align: center; /* 🔥 هذا فقط للتوسيط */
+}
 
 .navbar {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-
-  padding: 6px 10px;
+  gap: 8px;
+margin-top: 10px;
   background: #f8fafc;
+  padding: 8px 12px;
 
   border-radius: 14px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
 
-  width: fit-content;   /* 🔥 مهم */
+/* logo */
+.navbar .logo {
+  font-size: 15px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+/* links فقط داخل navbar */
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+/* links */
+.navbar .nav-links li a {
+  text-decoration: none !important;
+  color: #1f2937;
+
+  font-size: 13px;
+  padding: 6px 9px;
+
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  display: inline-block;
+  transition: 0.2s;
+}
+
+/* hover */
+.navbar .nav-links li a:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: #e2e8f0;
+}
+
+/* button */
+.navbar .btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #0f172a;
+  color: white;
+  text-decoration: none !important;
 }
 
 /* LOGO */
@@ -172,24 +224,68 @@ footer{background:#1e293b;padding:30px;text-align:center}
 }
 
 
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background-image: url("https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVudGlzdHxlbnwwfHwwfHx8MA%3D%3D");
+  background-size: cover;        /* 🔥 يغطي الشاشة كاملة */
+  background-position: center;   /* توسيط الصورة */
+  background-repeat: no-repeat;  /* منع التكرار */
+}
+
+.visitors-box {
+  display: inline-block;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px); /* 🔥 glass effect */
+
+  padding: 15px 25px;
+  border-radius: 12px;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+
+  text-align: center;
+
+  transition: 0.3s ease;
+}
+
+/* عنوان */
+.visitors-box h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* الرقم */
+.visitors-box p {
+  margin: 5px 0 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+/* hover حركة خفيفة */
+.visitors-box:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+
 </style>
 </head>
 
 <body>
 
 <!-- ✅ عداد الزوار -->
-<p id="visitorCount">عدد الزوار: ...</p>
+ <div class="visitors-box">
+  <h3>Visitors</h3>
+<p id="visitorCount"> : ...</p>
+ </div>
 
 
-<nav class="navbar">
-    <div class="logo"> <b>DentPrice</b> </div>
-<a href="#home">Home</a>
-<a href="#tool"> Calculate</a>
-<a href="#article"> Your Guide</a>
-<a href="#aboutme"> About Me </a>
-<a href="#contact me">Contat Me</a>
 
-</nav>
+
 
   
 <header id="home">
@@ -211,6 +307,19 @@ footer{background:#1e293b;padding:30px;text-align:center}
   </a>
 
 </div>
+
+<div class="navbar-container">
+<nav class="navbar">
+    <div class="logo"> <b>DentPrice</b> </div>
+<a href="#home">Home</a>
+<a href="#tool"> Calculate</a>
+<a href="#article"> Your Guide</a>
+<a href="#aboutme"> About Me </a>
+<a href="#contact me">Contat Me</a>
+
+</nav>
+</div>
+
  
 </header>
 
@@ -313,8 +422,8 @@ And so on
 تقسيمها على عدد ساعات العمل الشهرية 👉 للحصول على تكلفة الساعة التشغيلية
 <br>
 <br>
-3): تكلفة المواد (Materials)  <br>
-وهي
+3) تكلفة المواد (Materials) <br>
+وهي:
 مواد الحشو
 أدوات العلاج
 أي خامات مستخدمة في الخدمة
@@ -325,14 +434,14 @@ And so on
 <br>
 سعر الخدمة =
 تكلفة المواد
-+تكلفة وقت العيادة (ساعات الخدمة × تكلفة الساعة)
+تكلفة وقت العيادة (ساعات الخدمة × تكلفة الساعة)
 نصيبها من الأصول والمصاريف
-+نسبة الربح المطلوبة
+نسبة الربح المطلوبة
 <br>
 📊 النتيجة
 في النهاية يحصل الطبيب على:
-التكلفة الحقيقية لكل خدمة و
-السعر النهائي مع الربح و
+التكلفة الحقيقية لكل خدمة
+السعر النهائي مع الربح
 معرفة أرباح العيادة بدقة.
 <br>
 🎯 الهدف من النظام
@@ -409,7 +518,7 @@ async function countVisitor() {
     const newDoc = await ref.get();
 
     document.getElementById("visitorCount").innerText =
-      "عدد الزوار: " + newDoc.data().count;
+      "Views: " + newDoc.data().count;
 
   } catch (e) {
     console.log(e);
